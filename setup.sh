@@ -81,3 +81,13 @@ git clone https://github.com/laravel/laravel.git ./$project_name
 
 cp -r "$current_directory/.docker/" "$project_name/"
 cp "$current_directory/docker-compose.yml" "$project_name/"
+cp "$project_name/.env.example" "$project_name/.env"
+
+cd $project_name
+
+docker build --file .docker/Dockerfile -t laravel-docker .
+docker container create --name $project_name laravel-docker
+docker container cp $project_name:/var/www/laravel-app/vendor $PWD
+docker container rm -f $project_name
+
+php artisan key:generate

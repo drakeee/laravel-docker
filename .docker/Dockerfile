@@ -8,7 +8,8 @@ RUN	apt-get update && \
 	git \
 	libpq-dev \
 	zlib1g-dev \
-	libzip-dev
+	libzip-dev \
+	unzip
 
 #Download composer
 RUN	curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -21,7 +22,7 @@ RUN	docker-php-ext-install \
 	zip
 
 #Copy our sources to the corresponding folder
-COPY	.			/var/www/laravel-app
+COPY	.					/var/www/laravel-app
 COPY	.docker/vhost.conf	/etc/apache2/sites-available/000-default.conf
 
 #Switch to the source folder
