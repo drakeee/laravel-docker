@@ -1,0 +1,20 @@
+version: '3'
+services:
+    laravel-app:
+        build:
+            context: .
+            dockerfile: .docker/Dockerfile
+        image: laravel-docker
+        context: '.'
+        container_name: laravel-app
+        environment:
+            - APACHE_RUN_USER=#${UID}
+            - APACHE_RUN_GROUP=#${UID}
+        volumes:
+            - .:/var/www/laravel-app
+        ports:
+            - 8080:80
+        networks:
+            backend:
+                aliases:
+                    - laravel-app
